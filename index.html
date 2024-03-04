@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulaire de Contact</title>
+</head>
+<body>
+    <h1>Formulaire de Contact</h1>
+    <form id="contactForm">
+        <label>Nom:</label><br>
+        <input type="text" id="nom" name="nom"><br>
+        <label>Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label>Commentaire:</label><br>
+        <textarea id="commentaire" name="commentaire"></textarea><br>
+        <input type="button" value="Envoyer" onclick="envoyerForm()">
+    </form>
+
+    <script>
+        function envoyerForm() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://votredomaine.force.com/services/apexrest/formulaireContact/", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert("Votre message a été envoyé avec succès !");
+                }
+            };
+            var data = JSON.stringify({
+                "nom": document.getElementById("nom").value,
+                "email": document.getElementById("email").value,
+                "commentaire": document.getElementById("commentaire").value
+            });
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>
